@@ -7,5 +7,6 @@ CREATE TABLE `Product` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp(),
   `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_title` (`title`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
