@@ -12,11 +12,11 @@ import (
 
 func TestProductGet(t *testing.T) {
 	app := fiber.New()
-	app.Get(`/product/:id`, handler.GetProduct)
+	app.Get(`/products/:id`, handler.GetProduct)
 
-	id := `this-must-be-the-actual-id`
+	id := `1ff96e76-bc8b-42be-9ce9-d000aace5d54`
 
-	req := httptest.NewRequest(fiber.MethodGet, `/product/`+id, nil)
+	req := httptest.NewRequest(fiber.MethodGet, `/products/`+id, nil)
 	resp, _ := app.Test(req)
 
 	assert.Equal(t, fiber.StatusNotFound, resp.StatusCode, `Not found`)

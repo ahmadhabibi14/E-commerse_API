@@ -7,5 +7,8 @@ import (
 )
 
 func ApiRoutes(app *fiber.App) {
-	app.Get("/product/:id", handler.GetProduct)
+	app.Get("/products/:id", handler.GetProduct)
+	app.Post("/products", handler.CreateProduct)
+	app.Delete("/products/:id", handler.DeleteProduct)
+	app.Get("/products", handler.GetProductLists)
 }

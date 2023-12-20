@@ -2,7 +2,9 @@ package app
 
 import (
 	"e-commerse_api/conf"
+	"e-commerse_api/handler"
 	"e-commerse_api/middlewares"
+	"e-commerse_api/models/web"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -22,9 +24,12 @@ func (w *WebServer) Start() {
 		AppName: w.AppName,
 		Prefork: false,
 		ErrorHandler: func(c *fiber.Ctx, err error) error {
-			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
-				`error`: `ini error bang`,
-			})
+			webResponse := web.WebResponse{
+				Code:   fiber.StatusNotFound,
+				Status: handler.STATUS_NOTFOUND,
+				Data:   `Resource not found`,
+			}
+			return c.Status(fiber.StatusNotFound).JSON(webResponse)
 		},
 	})
 	app.Use(requestid.New())

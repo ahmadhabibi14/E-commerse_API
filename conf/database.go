@@ -7,10 +7,24 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 )
 
+var zlog = InitLogger()
+
+func init() {
+	// Used for testing
+	if os.Getenv("WEB_ENV") == "dev" {
+		err := godotenv.Load("../.env")
+		if err != nil {
+			zlog.Error().
+				Str("ERROR", err.Error()).
+				Msg("cannot load .env files")
+		}
+	}
+}
+
 func ConnectDB() *sql.DB {
-	zlog := InitLogger()
 	DbDriver := "mysql"
 	DbHost := os.Getenv("MYSQL_HOST")
 	DbPort := os.Getenv("MYSQL_PORT")

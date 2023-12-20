@@ -6,6 +6,7 @@ import (
 	"e-commerse_api/conf"
 	"e-commerse_api/models/data"
 	"e-commerse_api/models/web"
+	"e-commerse_api/utils"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -16,13 +17,22 @@ func GetProduct(c *fiber.Ctx) error {
 	defer db.Close()
 
 	id := c.Params(`id`)
+	msg, err := utils.ValidateStruct(web.ProductGetRequest{Id: id})
+	if err != nil {
+		webResponse := web.WebResponse{
+			Code:   fiber.StatusBadRequest,
+			Status: STATUS_INVALIDPAYLOAD,
+			Data:   msg,
+		}
+		return c.Status(fiber.StatusBadRequest).JSON(webResponse)
+	}
 	product := data.NewProduct(db)
 	productRow, err := product.FindById(ctx, id)
 	if err != nil {
 		webResponse := web.WebResponse{
 			Code:   fiber.StatusNotFound,
 			Status: STATUS_NOTFOUND,
-			Data:   productRow,
+			Data:   `Product not found`,
 		}
 		return c.Status(fiber.StatusNotFound).JSON(webResponse)
 	}
