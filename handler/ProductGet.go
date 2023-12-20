@@ -12,6 +12,7 @@ import (
 )
 
 func GetProduct(c *fiber.Ctx) error {
+	zlog := conf.InitLogger()
 	var db *sql.DB = conf.ConnectDB()
 	ctx := context.Background()
 	defer db.Close()
@@ -24,6 +25,7 @@ func GetProduct(c *fiber.Ctx) error {
 			Status: STATUS_INVALIDPAYLOAD,
 			Data:   msg,
 		}
+		zlog.Error().Str("ERROR", err.Error()).Msg("Error validate product ID")
 		return c.Status(fiber.StatusBadRequest).JSON(webResponse)
 	}
 	product := data.NewProduct(db)
@@ -34,6 +36,7 @@ func GetProduct(c *fiber.Ctx) error {
 			Status: STATUS_NOTFOUND,
 			Data:   `Product not found`,
 		}
+		zlog.Log().Str("ERROR", err.Error()).Msg("Product not found")
 		return c.Status(fiber.StatusNotFound).JSON(webResponse)
 	}
 
@@ -42,5 +45,6 @@ func GetProduct(c *fiber.Ctx) error {
 		Status: STATUS_OK,
 		Data:   productRow,
 	}
+	c.Set(fiber.HeaderContentType, fiber.MIMEApplicationJSON)
 	return c.Status(fiber.StatusOK).JSON(webResponse)
 }

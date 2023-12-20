@@ -61,5 +61,6 @@ func CreateProduct(c *fiber.Ctx) error {
 		Status: STATUS_OK,
 		Data:   `Product created`,
 	}
+	c.Set(fiber.HeaderContentType, fiber.MIMEApplicationJSON)
 	return c.Status(fiber.StatusCreated).JSON(webResponse)
 }

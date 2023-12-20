@@ -11,4 +11,5 @@ func ApiRoutes(app *fiber.App) {
 	app.Post("/products", handler.CreateProduct)
 	app.Delete("/products/:id", handler.DeleteProduct)
 	app.Get("/products", handler.GetProductLists)
+	app.Put("/products/:id", handler.UpdateProduct)
 }

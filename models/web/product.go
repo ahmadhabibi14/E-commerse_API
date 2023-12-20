@@ -32,6 +32,14 @@ type ProductDeleteRequest struct {
 	Id string `validate:"required,min=35,max=36" json:"id"`
 }
 
+type ProductUpdateRequest struct {
+	Id          string  `db:"id" json:"id" validate:"required,min=35,max=36"`
+	Title       string  `db:"title" json:"title" validate:"required"`
+	Description string  `db:"description" json:"description" validate:"required"`
+	Rating      float64 `db:"rating" json:"rating"`
+	Image       string  `db:"image" json:"image"`
+}
+
 type ProductListResponse struct {
 	Id          string       `db:"id" json:"id"`
 	Title       string       `db:"title" json:"title"`

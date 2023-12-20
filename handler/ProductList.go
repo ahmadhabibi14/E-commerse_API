@@ -15,7 +15,51 @@ func GetProductLists(c *fiber.Ctx) error {
 	ctx := context.Background()
 	defer db.Close()
 
+	sort := c.Query("sortBy")
 	product := data.NewProduct(db)
+
+	if sort != `` {
+		if sort == `title` {
+			productList, err := product.FindAllSortByTitle(ctx)
+			if err != nil {
+				webResponse := web.WebResponse{
+					Code:   fiber.StatusInternalServerError,
+					Status: STATUS_SERVERERROR,
+					Data:   err.Error(),
+				}
+				return c.Status(fiber.StatusInternalServerError).JSON(webResponse)
+			}
+			if productList == nil {
+				productList = []web.ProductListResponse{}
+			}
+			webResponse := web.WebResponse{
+				Code:   fiber.StatusOK,
+				Status: STATUS_OK,
+				Data:   productList,
+			}
+			return c.Status(fiber.StatusOK).JSON(webResponse)
+		} else if sort == `rating` {
+			productList, err := product.FindAllSortByRating(ctx)
+			if err != nil {
+				webResponse := web.WebResponse{
+					Code:   fiber.StatusInternalServerError,
+					Status: STATUS_SERVERERROR,
+					Data:   err.Error(),
+				}
+				return c.Status(fiber.StatusInternalServerError).JSON(webResponse)
+			}
+			if productList == nil {
+				productList = []web.ProductListResponse{}
+			}
+			webResponse := web.WebResponse{
+				Code:   fiber.StatusOK,
+				Status: STATUS_OK,
+				Data:   productList,
+			}
+			return c.Status(fiber.StatusOK).JSON(webResponse)
+		}
+	}
+
 	productList, err := product.FindAll(ctx)
 	if err != nil {
 		webResponse := web.WebResponse{
@@ -25,7 +69,6 @@ func GetProductLists(c *fiber.Ctx) error {
 		}
 		return c.Status(fiber.StatusInternalServerError).JSON(webResponse)
 	}
-
 	if productList == nil {
 		productList = []web.ProductListResponse{}
 	}
@@ -34,5 +77,6 @@ func GetProductLists(c *fiber.Ctx) error {
 		Status: STATUS_OK,
 		Data:   productList,
 	}
+	c.Set(fiber.HeaderContentType, fiber.MIMEApplicationJSON)
 	return c.Status(fiber.StatusOK).JSON(webResponse)
 }
