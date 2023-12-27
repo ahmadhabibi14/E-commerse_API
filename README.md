@@ -63,6 +63,7 @@ Content-Type: application/json
 {
   "code": 200,
   "status": "OK",
+  "errors": "",
   "data": [
     {
       "id": "product-id",
@@ -97,6 +98,7 @@ Content-Type: application/json
 {
   "code": 200,
   "status": "OK",
+  "errors": "",
   "data": {
     "id": "product-id",
     "title": "product title",
@@ -136,6 +138,7 @@ Content-Type: application/json
 {
   "code": 201,
   "status": "OK",
+  "errors": "",
   "data": "Product created"
 }
 ```
@@ -163,6 +166,7 @@ Content-Type: application/json
 {
   "code": 200,
   "status": "OK",
+  "errors": "",
   "data": "Product updated"
 }
 ```
@@ -183,5 +187,6 @@ Content-Type: application/json
 {
   "code": 201,
   "status": "OK",
+  "errors": "",
   "data": "Product deleted"
 }
