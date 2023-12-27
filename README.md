@@ -160,7 +160,7 @@ Content-Type: application/json
 
 ##### Response
 ```http
-POST /products/:id
+PUT /products/:id
 Content-Type: application/json
 
 {
@@ -175,13 +175,13 @@ Content-Type: application/json
 
 ##### Request
 ```http
-PUT /products/:id
+DELETE /products/:id
 Content-Type: application/json
 ```
 
 ##### Response
 ```http
-POST /products/:id
+DELETE /products/:id
 Content-Type: application/json
 
 {
