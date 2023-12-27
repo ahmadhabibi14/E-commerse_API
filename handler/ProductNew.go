@@ -22,7 +22,8 @@ func CreateProduct(c *fiber.Ctx) error {
 		webResponse := web.WebResponse{
 			Code:   fiber.StatusBadRequest,
 			Status: STATUS_BADREQUEST,
-			Data:   `Invalid input`,
+			Errors: `Invalid input`,
+			Data:   ``,
 		}
 		return c.Status(fiber.StatusBadRequest).JSON(webResponse)
 	}
@@ -32,7 +33,8 @@ func CreateProduct(c *fiber.Ctx) error {
 		webResponse := web.WebResponse{
 			Code:   fiber.StatusBadRequest,
 			Status: STATUS_INVALIDPAYLOAD,
-			Data:   msg,
+			Errors: msg[0],
+			Data:   ``,
 		}
 		return c.Status(fiber.StatusBadRequest).JSON(webResponse)
 	}
@@ -50,7 +52,8 @@ func CreateProduct(c *fiber.Ctx) error {
 		webResponse := web.WebResponse{
 			Code:   fiber.StatusBadRequest,
 			Status: STATUS_BADREQUEST,
-			Data:   productErr,
+			Errors: `Cannot create product`,
+			Data:   ``,
 		}
 		return c.Status(fiber.StatusBadRequest).JSON(webResponse)
 	}
@@ -58,6 +61,7 @@ func CreateProduct(c *fiber.Ctx) error {
 	webResponse := web.WebResponse{
 		Code:   fiber.StatusCreated,
 		Status: STATUS_OK,
+		Errors: ``,
 		Data:   `Product created`,
 	}
 	c.Set(fiber.HeaderContentType, fiber.MIMEApplicationJSON)

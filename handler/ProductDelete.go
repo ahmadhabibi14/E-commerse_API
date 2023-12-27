@@ -22,7 +22,8 @@ func DeleteProduct(c *fiber.Ctx) error {
 		webResponse := web.WebResponse{
 			Code:   fiber.StatusBadRequest,
 			Status: STATUS_INVALIDPAYLOAD,
-			Data:   msg,
+			Errors: msg[0],
+			Data:   "",
 		}
 		return c.Status(fiber.StatusBadRequest).JSON(webResponse)
 	}
@@ -33,7 +34,8 @@ func DeleteProduct(c *fiber.Ctx) error {
 		webResponse := web.WebResponse{
 			Code:   fiber.StatusBadRequest,
 			Status: STATUS_NOTFOUND,
-			Data:   `Product not found`,
+			Errors: `Product not found`,
+			Data:   ``,
 		}
 		return c.Status(fiber.StatusBadRequest).JSON(webResponse)
 	}
@@ -43,6 +45,7 @@ func DeleteProduct(c *fiber.Ctx) error {
 	webResponse := web.WebResponse{
 		Code:   fiber.StatusCreated,
 		Status: STATUS_OK,
+		Errors: ``,
 		Data:   `Product deleted`,
 	}
 	c.Set(fiber.HeaderContentType, fiber.MIMEApplicationJSON)

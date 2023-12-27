@@ -22,7 +22,8 @@ func UpdateProduct(c *fiber.Ctx) error {
 		webResponse := web.WebResponse{
 			Code:   fiber.StatusBadRequest,
 			Status: STATUS_BADREQUEST,
-			Data:   `Invalid input`,
+			Errors: `Invalid input`,
+			Data:   ``,
 		}
 		return c.Status(fiber.StatusBadRequest).JSON(webResponse)
 	}
@@ -33,7 +34,8 @@ func UpdateProduct(c *fiber.Ctx) error {
 		webResponse := web.WebResponse{
 			Code:   fiber.StatusBadRequest,
 			Status: STATUS_INVALIDPAYLOAD,
-			Data:   msg,
+			Errors: msg[0],
+			Data:   ``,
 		}
 		return c.Status(fiber.StatusBadRequest).JSON(webResponse)
 	}
@@ -44,7 +46,8 @@ func UpdateProduct(c *fiber.Ctx) error {
 		webResponse := web.WebResponse{
 			Code:   fiber.StatusBadRequest,
 			Status: STATUS_NOTFOUND,
-			Data:   `Product not found`,
+			Errors: `Product not found`,
+			Data:   ``,
 		}
 		return c.Status(fiber.StatusBadRequest).JSON(webResponse)
 	}
@@ -61,7 +64,8 @@ func UpdateProduct(c *fiber.Ctx) error {
 		webResponse := web.WebResponse{
 			Code:   fiber.StatusBadRequest,
 			Status: STATUS_INVALIDPAYLOAD,
-			Data:   productUpdateErr,
+			Errors: productUpdateErr.Error(),
+			Data:   ``,
 		}
 		return c.Status(fiber.StatusBadRequest).JSON(webResponse)
 	}
@@ -69,6 +73,7 @@ func UpdateProduct(c *fiber.Ctx) error {
 	webResponse := web.WebResponse{
 		Code:   fiber.StatusOK,
 		Status: STATUS_OK,
+		Errors: ``,
 		Data:   `Product updated`,
 	}
 	return c.Status(fiber.StatusOK).JSON(webResponse)

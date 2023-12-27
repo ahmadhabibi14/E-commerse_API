@@ -22,7 +22,8 @@ func GetProduct(c *fiber.Ctx) error {
 		webResponse := web.WebResponse{
 			Code:   fiber.StatusBadRequest,
 			Status: STATUS_INVALIDPAYLOAD,
-			Data:   msg,
+			Errors: msg[0],
+			Data:   ``,
 		}
 		zlog.Error().Str("ERROR", err.Error()).Msg("Error validate product ID")
 		return c.Status(fiber.StatusBadRequest).JSON(webResponse)
@@ -33,7 +34,8 @@ func GetProduct(c *fiber.Ctx) error {
 		webResponse := web.WebResponse{
 			Code:   fiber.StatusNotFound,
 			Status: STATUS_NOTFOUND,
-			Data:   `Product not found`,
+			Errors: `Product not found`,
+			Data:   ``,
 		}
 		zlog.Log().Str("ERROR", err.Error()).Msg("Product not found")
 		return c.Status(fiber.StatusNotFound).JSON(webResponse)
@@ -42,6 +44,7 @@ func GetProduct(c *fiber.Ctx) error {
 	webResponse := web.WebResponse{
 		Code:   fiber.StatusOK,
 		Status: STATUS_OK,
+		Errors: ``,
 		Data:   productRow,
 	}
 	c.Set(fiber.HeaderContentType, fiber.MIMEApplicationJSON)

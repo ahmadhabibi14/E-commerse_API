@@ -24,7 +24,8 @@ func GetProductLists(c *fiber.Ctx) error {
 				webResponse := web.WebResponse{
 					Code:   fiber.StatusInternalServerError,
 					Status: STATUS_SERVERERROR,
-					Data:   err.Error(),
+					Errors: err.Error(),
+					Data:   ``,
 				}
 				return c.Status(fiber.StatusInternalServerError).JSON(webResponse)
 			}
@@ -34,6 +35,7 @@ func GetProductLists(c *fiber.Ctx) error {
 			webResponse := web.WebResponse{
 				Code:   fiber.StatusOK,
 				Status: STATUS_OK,
+				Errors: ``,
 				Data:   productList,
 			}
 			return c.Status(fiber.StatusOK).JSON(webResponse)
@@ -43,7 +45,8 @@ func GetProductLists(c *fiber.Ctx) error {
 				webResponse := web.WebResponse{
 					Code:   fiber.StatusInternalServerError,
 					Status: STATUS_SERVERERROR,
-					Data:   err.Error(),
+					Errors: err.Error(),
+					Data:   ``,
 				}
 				return c.Status(fiber.StatusInternalServerError).JSON(webResponse)
 			}
@@ -53,6 +56,7 @@ func GetProductLists(c *fiber.Ctx) error {
 			webResponse := web.WebResponse{
 				Code:   fiber.StatusOK,
 				Status: STATUS_OK,
+				Errors: ``,
 				Data:   productList,
 			}
 			return c.Status(fiber.StatusOK).JSON(webResponse)
@@ -64,7 +68,8 @@ func GetProductLists(c *fiber.Ctx) error {
 		webResponse := web.WebResponse{
 			Code:   fiber.StatusInternalServerError,
 			Status: STATUS_SERVERERROR,
-			Data:   err.Error(),
+			Errors: err.Error(),
+			Data:   ``,
 		}
 		return c.Status(fiber.StatusInternalServerError).JSON(webResponse)
 	}
@@ -74,6 +79,7 @@ func GetProductLists(c *fiber.Ctx) error {
 	webResponse := web.WebResponse{
 		Code:   fiber.StatusOK,
 		Status: STATUS_OK,
+		Errors: ``,
 		Data:   productList,
 	}
 	c.Set(fiber.HeaderContentType, fiber.MIMEApplicationJSON)
