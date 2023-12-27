@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"context"
 	"database/sql"
 	"e-commerse_api/conf"
 	"e-commerse_api/models/data"
@@ -14,7 +13,7 @@ import (
 
 func UpdateProduct(c *fiber.Ctx) error {
 	var db *sql.DB = conf.ConnectDB()
-	ctx := context.Background()
+	ctx := c.Context()
 	defer db.Close()
 
 	id := c.Params(`id`)
